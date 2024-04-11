@@ -47,6 +47,10 @@ public class Player : MonoBehaviour
     public bool near_save_point = false;
     //For testing
     public Text level_textbox;
+
+    public TrapController trapController;
+    private ITrap trapStalagmites;
+
     void Start()
     {
         Instance = this;
@@ -55,6 +59,7 @@ public class Player : MonoBehaviour
         max_health = 20 + level * 5;
         damage = 1 + level;
         health = max_health;
+        trapStalagmites = new TrapStalagmites();
         //LoadPlayer();
     }
 
@@ -215,16 +220,27 @@ public class Player : MonoBehaviour
         }*/
     }
     //проверка, на земле ли
-    void OnTriggerEnter2D()
+    void OnTriggerEnter2D(Collider2D other)
     {
         has_taken_damage = false;
         grounded = true;
         if (has_double_jump) double_jump = true;
+
+        if (other.tag == "Stalagmites")
+        {
+            trapStalagmites.FallIntoTrap(trapController);
+            if (health <= 0) Die();
+        }
     }
-    void OnTriggerExit2D()
+    void OnTriggerExit2D(Collider2D other)
     {
         last_ground = Time.time;
         grounded = false;
+
+        if (other.tag == "Stalagmites")
+        {
+            grounded = true;
+        }
     }
     void Flip()
     {

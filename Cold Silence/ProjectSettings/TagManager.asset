@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - Ground
   - SavePoint
+  - Stalagmites
   layers:
   - Default
   - TransparentFX
