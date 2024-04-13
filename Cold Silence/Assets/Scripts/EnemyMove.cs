@@ -4,7 +4,7 @@ using System.Xml.XPath;
 using UnityEngine;
 using UnityEngine.UI;
 public class EnemyMove : Enemy
-{
+{//дочерний класс от класса врага, нужно по доброму его переименовать
     public int _moveSpeed;
     public int _attackDamage;
     public int _lifePoints;

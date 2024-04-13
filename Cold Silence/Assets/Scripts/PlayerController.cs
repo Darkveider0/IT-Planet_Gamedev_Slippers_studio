@@ -28,25 +28,36 @@ public class Player : MonoBehaviour
     //Стрельба
     public Transform bulletSpawnPoint;
     public GameObject bulletPrefab;
-    public float bulletSpeed = 10;
+    public float bulletSpeed;
     public float shooting_cooldown;
+    public float dashing_cooldown;
+    public float dash_length;
+    public float dash_speed_multiplier;
     float last_shot;
     float last_ground;
-    //GameObject Gun;
+    float dash_start;
+
     //Movement
     public float speed;
     public float jump;
     float moveVelocity;
-    //Grounded Vars
+
     public bool has_double_jump;
-    bool grounded = true;
+    public bool has_walljump;
+    public bool has_dash;
+    public bool grounded = true;
     bool double_jump = false;
     bool facingRight = true;
     bool has_taken_damage = false;
-    bool is_on_enemy = false;
+    public bool is_on_enemy = false;
+    public bool is_on_wall = false;
+    bool is_dashing = false;
     public bool near_save_point = false;
     //For testing
     public Text level_textbox;
+
+    BoxCollider2D groundTrigger;
+    BoxCollider2D wallTrigger;
     void Start()
     {
         Instance = this;
@@ -56,6 +67,9 @@ public class Player : MonoBehaviour
         damage = 1 + level;
         health = max_health;
         //LoadPlayer();
+        var colliders = GetComponents<BoxCollider2D>();//для загрузки триггеров
+        groundTrigger = colliders[0];
+        wallTrigger = colliders[1];
     }
 
 
@@ -77,7 +91,7 @@ public class Player : MonoBehaviour
         else
             Horizontal_Move = Input.GetAxisRaw("Horizontal") * -speed;
         animator.SetFloat("Horizontal_Move", Mathf.Abs(Horizontal_Move));
-        if (grounded == false)
+        if (!grounded && !is_on_wall)
         {
             animator.SetBool("Jump", true);
         }
@@ -108,7 +122,26 @@ public class Player : MonoBehaviour
             last_damage = Time.time;
             GetDamage(EnemyMove.attack);
         }
-
+        if(is_dashing)
+        {
+            //Debug.Log(Time.time - dash_start);
+            if(Time.time-dash_start <= dash_length)
+            {
+                if (facingRight)
+                {
+                    rb.velocity = new Vector2(speed* dash_speed_multiplier, 0);
+                }
+                else
+                {
+                    rb.velocity = new Vector2(-speed* dash_speed_multiplier, 0);
+                }
+            }   
+            else
+            {
+                is_dashing = false;
+                rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+            }
+        }
         //shooting
         if (Input.GetMouseButtonDown(0))
         {
@@ -129,24 +162,42 @@ public class Player : MonoBehaviour
                 }
             }
         }
-        if (!has_taken_damage)
+   
+        if (!has_taken_damage && !is_dashing)
         {
+            //Dashing
+            if (Input.GetKeyDown(KeyCode.LeftShift)||Input.GetKeyDown(KeyCode.X))
+            {
+                //Debug.Log("Нажат шифт");
+                if (Time.time - dash_start - dash_length >= dashing_cooldown)
+                {
+                    rb.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
+                    dash_start = Time.time;
+                    is_dashing = true;
+                }
+            }
             //Jumping
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.W))
             {
+                if(is_on_wall&&has_walljump)
+                {
+                    rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+                    rb.velocity = new Vector2(rb.velocity.x, jump);
+                    is_on_wall = false;
+                }
                 if (grounded)
                 {
-                    GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, jump);
+                    rb.velocity = new Vector2(rb.velocity.x, jump);
                     grounded = false;
                     last_ground = Time.time;
                 }
                 else if (Time.time - last_ground <= 0.1 && !grounded)
                 {
-                    GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, jump);
+                    rb.velocity = new Vector2(rb.velocity.x, jump);
                 }
                 else if (double_jump)
                 {
-                    GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, jump);
+                    rb.velocity = new Vector2(rb.velocity.x, jump);
                     double_jump = false;
                 }
             }
@@ -154,27 +205,32 @@ public class Player : MonoBehaviour
             moveVelocity = 0;
 
             //Left Right Movement
-            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
-            {
-                moveVelocity = -speed;
-                if (facingRight)
+
+                if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
                 {
-                    Flip();
+                    moveVelocity = -speed;
+                    if (facingRight)
+                    {
+                        Flip();
+                    }
                 }
-            }
-            if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
-            {
-                moveVelocity = speed;
-                if (!facingRight)
+                if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
                 {
-                    Flip();
+                    moveVelocity = speed;
+                    if (!facingRight)
+                    {
+                        Flip();
+                    }
                 }
-            }
+            
             if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)))
             {
                 moveVelocity = 0;
             }
-            GetComponent<Rigidbody2D>().velocity = new Vector2(moveVelocity, GetComponent<Rigidbody2D>().velocity.y);
+
+
+            rb.velocity = new Vector2(moveVelocity, rb.velocity.y);
+
         }
         else
         {
@@ -194,13 +250,24 @@ public class Player : MonoBehaviour
                 GetDamage(EnemyMove.attack);
             }
         }
-        /*if (collision.gameObject.tag == "SavePoint")
-        {
-            near_save_point = true;
-        }*/
         /*if (collision.gameObject.tag == "Ground")
         {
-            grounded = true;
+            if (!is_on_wall)
+            {
+                has_taken_damage = false;
+                grounded = true;
+                if (has_double_jump) double_jump = true;
+            }
+        }*/
+    }
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        /*if (collision.gameObject.tag == "Ground")
+        {
+            if (!is_on_wall)
+            {
+                grounded = true;
+            }
         }*/
     }
     private void OnCollisionExit2D(Collision2D collision)
@@ -209,22 +276,73 @@ public class Player : MonoBehaviour
         {
             is_on_enemy = false;
         }
-        /*if(collision.gameObject.tag == "SavePoint")
+        /*if (collision.gameObject.tag == "Ground")
         {
-            near_save_point = false;
+            if (!is_on_wall)
+            {
+                last_ground = Time.time;
+                grounded = false;
+            }
         }*/
     }
+
     //проверка, на земле ли
-    void OnTriggerEnter2D()
+    void OnTriggerEnter2D(Collider2D collider)
     {
-        has_taken_damage = false;
-        grounded = true;
-        if (has_double_jump) double_jump = true;
+        if (collider.CompareTag("Ground"))
+        {
+            if (collider.IsTouching(groundTrigger))
+            {
+                has_taken_damage = false;
+                grounded = true;
+                if (has_double_jump) double_jump = true;
+            }
+
+            if(collider.IsTouching(wallTrigger))
+            {
+                is_on_wall = true;
+                if (has_walljump)
+                    rb.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
+            }
+            
+        }
     }
-    void OnTriggerExit2D()
+    private void OnTriggerStay2D(Collider2D collider)
     {
-        last_ground = Time.time;
-        grounded = false;
+        if (collider.CompareTag("Ground"))
+        {
+            if (collider.IsTouching(groundTrigger))
+            {
+                grounded = true;
+            }
+            if (collider.IsTouching(wallTrigger))
+            {
+                if (rb.velocity.y < 0)
+                {
+                    is_on_wall = true;
+                    if (has_walljump)
+                        rb.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
+                }
+            }
+        }
+    }
+    void OnTriggerExit2D(Collider2D collider)
+    {
+        
+        if (collider.CompareTag("Ground"))
+        {
+            if (!collider.IsTouching(groundTrigger))
+            {
+                last_ground = Time.time;
+                grounded = false;
+            }
+            if (!collider.IsTouching(wallTrigger))
+            {
+                is_on_wall = false;
+                if (has_walljump)
+                    rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+            }
+        }
     }
     void Flip()
     {

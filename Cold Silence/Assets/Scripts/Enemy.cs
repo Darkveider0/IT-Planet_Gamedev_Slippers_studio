@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
-{
+{//Базовый класс врага, от него наследуются остальные враги
     int moveSpeed;
     int attackDamage;
     int lifePoints;
@@ -27,7 +27,7 @@ public class Enemy : MonoBehaviour
         target = waypoints[1].position;
     }
 
-    public virtual IEnumerator SetTarget(Vector3 position)
+    public virtual IEnumerator SetTarget(Vector3 position)//враг остаётся на метке, на которую он шёл, 2 секунды, после этого идёт к следующей метке
     {
         yield return new WaitForSeconds(2f);
         target=position;
