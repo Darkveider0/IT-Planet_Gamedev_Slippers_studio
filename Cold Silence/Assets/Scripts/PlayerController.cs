@@ -50,6 +50,8 @@ public class Player : MonoBehaviour
 
     public TrapController trapController;
     private ITrap trapStalagmites;
+    public bool move = false;
+    public GameObject losePanel;
 
     void Start()
     {
@@ -70,120 +72,124 @@ public class Player : MonoBehaviour
 
         //Анимации
 
+        if (move)
+        {
 
-        if (grounded && Input.GetKeyDown(KeyCode.Space))
-        {
-            rb.AddForce(transform.up * jump, ForceMode2D.Impulse);
-        }
-
-        //по этому гайду подключались анимации https://www.youtube.com/watch?v=L5k9t7ug2r8
-        if (facingRight)
-            Horizontal_Move = Input.GetAxisRaw("Horizontal") * speed;
-        else
-            Horizontal_Move = Input.GetAxisRaw("Horizontal") * -speed;
-        animator.SetFloat("Horizontal_Move", Mathf.Abs(Horizontal_Move));
-        if (grounded == false)
-        {
-            animator.SetBool("Jump", true);
-        }
-        else
-        {
-            animator.SetBool("Jump", false);
-        }
-
-        //animator.SetFloat("Horizontal_Move", Mathf.Abs(Horizontal_Move));
-        if (Horizontal_Move < 0 && FacingRight)
-        {
-            Flip();
-        }
-        else if (Horizontal_Move > 0 && !FacingRight)
-        {
-            Flip();
-        }
-
-        if (Input.GetKeyDown(KeyCode.E) && CheckIfAtSavePoint())
-        {
-            SavePlayer();
-        }
-
-        //Если игрок всё ещё касается с врагом
-        if (is_on_enemy && Time.time - last_damage >= invisibilty_frames)
-        {
-            has_taken_damage = true;
-            last_damage = Time.time;
-            GetDamage(EnemyMove.attack);
-        }
-
-        //shooting
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (Time.time - last_shot >= shooting_cooldown)
+            if (grounded && Input.GetKeyDown(KeyCode.Space))
             {
-                last_shot = Time.time;
-                var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
-                Bullet.attack = damage;
-                if (facingRight)
-                {
-                    bullet.GetComponent<Rigidbody2D>().velocity = bulletSpawnPoint.right * bulletSpeed;
-
-                }
-                else
-                {
-                    bullet.GetComponent<Rigidbody2D>().velocity = bulletSpawnPoint.right * -bulletSpeed;
-                    bullet.GetComponent<Rigidbody2D>().transform.localScale = new Vector3(-(float)0.2, (float)0.2, 1); ;
-                }
-            }
-        }
-        if (!has_taken_damage)
-        {
-            //Jumping
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.W))
-            {
-                if (grounded)
-                {
-                    GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, jump);
-                    grounded = false;
-                    last_ground = Time.time;
-                }
-                else if (Time.time - last_ground <= 0.1 && !grounded)
-                {
-                    GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, jump);
-                }
-                else if (double_jump)
-                {
-                    GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, jump);
-                    double_jump = false;
-                }
+                rb.AddForce(transform.up * jump, ForceMode2D.Impulse);
             }
 
-            moveVelocity = 0;
+            //по этому гайду подключались анимации https://www.youtube.com/watch?v=L5k9t7ug2r8
+            if (facingRight)
+                Horizontal_Move = Input.GetAxisRaw("Horizontal") * speed;
+            else
+                Horizontal_Move = Input.GetAxisRaw("Horizontal") * -speed;
+            animator.SetFloat("Horizontal_Move", Mathf.Abs(Horizontal_Move));
+            if (grounded == false)
+            {
+                animator.SetBool("Jump", true);
+            }
+            else
+            {
+                animator.SetBool("Jump", false);
+            }
 
-            //Left Right Movement
-            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+            //animator.SetFloat("Horizontal_Move", Mathf.Abs(Horizontal_Move));
+            if (Horizontal_Move < 0 && FacingRight)
             {
-                moveVelocity = -speed;
-                if (facingRight)
+                Flip();
+            }
+            else if (Horizontal_Move > 0 && !FacingRight)
+            {
+                Flip();
+            }
+
+            if (Input.GetKeyDown(KeyCode.E) && CheckIfAtSavePoint())
+            {
+                SavePlayer();
+            }
+
+            //Если игрок всё ещё касается с врагом
+            if (is_on_enemy && Time.time - last_damage >= invisibilty_frames)
+            {
+                has_taken_damage = true;
+                last_damage = Time.time;
+                GetDamage(EnemyMove.attack);
+            }
+
+            //shooting
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (Time.time - last_shot >= shooting_cooldown)
                 {
-                    Flip();
+                    last_shot = Time.time;
+                    var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+                    Bullet.attack = damage;
+                    if (facingRight)
+                    {
+                        bullet.GetComponent<Rigidbody2D>().velocity = bulletSpawnPoint.right * bulletSpeed;
+
+                    }
+                    else
+                    {
+                        bullet.GetComponent<Rigidbody2D>().velocity = bulletSpawnPoint.right * -bulletSpeed;
+                        bullet.GetComponent<Rigidbody2D>().transform.localScale = new Vector3(-(float)0.2, (float)0.2, 1); ;
+                    }
                 }
             }
-            if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+            if (!has_taken_damage)
             {
-                moveVelocity = speed;
-                if (!facingRight)
+                //Jumping
+                if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.W))
                 {
-                    Flip();
+                    if (grounded)
+                    {
+                        GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, jump);
+                        grounded = false;
+                        last_ground = Time.time;
+                    }
+                    else if (Time.time - last_ground <= 0.1 && !grounded)
+                    {
+                        GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, jump);
+                    }
+                    else if (double_jump)
+                    {
+                        GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, jump);
+                        double_jump = false;
+                    }
                 }
-            }
-            if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)))
-            {
+
                 moveVelocity = 0;
+
+                //Left Right Movement
+                if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+                {
+                    moveVelocity = -speed;
+                    if (facingRight)
+                    {
+                        Flip();
+                    }
+                }
+                if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+                {
+                    moveVelocity = speed;
+                    if (!facingRight)
+                    {
+                        Flip();
+                    }
+                }
+                if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)))
+                {
+                    moveVelocity = 0;
+                }
+                GetComponent<Rigidbody2D>().velocity = new Vector2(moveVelocity, GetComponent<Rigidbody2D>().velocity.y);
             }
-            GetComponent<Rigidbody2D>().velocity = new Vector2(moveVelocity, GetComponent<Rigidbody2D>().velocity.y);
-        }
-        else
-        {
-            //GetComponent<Rigidbody2D>().velocity = GetComponent<Rigidbody2D>().velocity;// + new Vector2(0, -(float)0.1);
+            else
+            {
+                //GetComponent<Rigidbody2D>().velocity = GetComponent<Rigidbody2D>().velocity;// + new Vector2(0, -(float)0.1);
+            }
+
         }
     }
     //касание разных объектов
@@ -286,10 +292,12 @@ public class Player : MonoBehaviour
             health = max_health;
         }
     }
-    private void Die()
+    public void Die()
     {
         //Окончание игры
         //gameObject.SetActive(false);
+        losePanel.SetActive(true);
+        Lose.Instance.Defeat();
     }
 
     public void SavePlayer()
