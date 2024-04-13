@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.ComponentModel.Design;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -17,9 +18,7 @@ public class Player : MonoBehaviour
 
     public int max_health;
     public int health;
-    public int xp;
-    public int xp_max;
-    public int level;
+    
     public Text test_textbox;
     public int damage;
     public float invisibilty_frames;
@@ -30,9 +29,11 @@ public class Player : MonoBehaviour
     public GameObject bulletPrefab;
     public float bulletSpeed;
     public float shooting_cooldown;
+
     public float dashing_cooldown;
     public float dash_length;
     public float dash_speed_multiplier;
+
     float last_shot;
     float last_ground;
     float dash_start;
@@ -49,10 +50,11 @@ public class Player : MonoBehaviour
     bool double_jump = false;
     bool facingRight = true;
     bool has_taken_damage = false;
-    public bool is_on_enemy = false;
-    public bool is_on_wall = false;
+    bool is_on_enemy = false;
+    bool is_on_wall = false;
+    public bool is_in_menu = false;
     bool is_dashing = false;
-    public bool near_save_point = false;
+    //public bool near_save_point = false;
     //For testing
     public Text level_textbox;
 
@@ -62,9 +64,9 @@ public class Player : MonoBehaviour
     {
         Instance = this;
         rb = GetComponent<Rigidbody2D>();
-        xp_max = 15 + level * 5;
-        max_health = 20 + level * 5;
-        damage = 1 + level;
+        //xp_max = 15 + level * 5;
+        //max_health = 20 + level * 5;
+        //damage = 1 + level;
         health = max_health;
         //LoadPlayer();
         var colliders = GetComponents<BoxCollider2D>();//для загрузки триггеров
@@ -110,10 +112,10 @@ public class Player : MonoBehaviour
             Flip();
         }
 
-        if (Input.GetKeyDown(KeyCode.E) && CheckIfAtSavePoint())
+        /*if (Input.GetKeyDown(KeyCode.E) && CheckIfAtSavePoint())
         {
             SavePlayer();
-        }
+        }*/
 
         //Если игрок всё ещё касается с врагом
         if (is_on_enemy && Time.time - last_damage >= invisibilty_frames)
@@ -122,89 +124,91 @@ public class Player : MonoBehaviour
             last_damage = Time.time;
             GetDamage(EnemyMove.attack);
         }
-        if(is_dashing)
+        if (is_dashing)
         {
             //Debug.Log(Time.time - dash_start);
-            if(Time.time-dash_start <= dash_length)
+            if (Time.time - dash_start <= dash_length)
             {
                 if (facingRight)
                 {
-                    rb.velocity = new Vector2(speed* dash_speed_multiplier, 0);
+                    rb.velocity = new Vector2(speed * dash_speed_multiplier, 0);
                 }
                 else
                 {
-                    rb.velocity = new Vector2(-speed* dash_speed_multiplier, 0);
+                    rb.velocity = new Vector2(-speed * dash_speed_multiplier, 0);
                 }
-            }   
+            }
             else
             {
                 is_dashing = false;
                 rb.constraints = RigidbodyConstraints2D.FreezeRotation;
             }
         }
-        //shooting
-        if (Input.GetMouseButtonDown(0))
+        if (!is_in_menu)
         {
-            if (Time.time - last_shot >= shooting_cooldown)
+            //shooting
+            if (Input.GetMouseButtonDown(0))
             {
-                last_shot = Time.time;
-                var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
-                Bullet.attack = damage;
-                if (facingRight)
+                if (Time.time - last_shot >= shooting_cooldown)
                 {
-                    bullet.GetComponent<Rigidbody2D>().velocity = bulletSpawnPoint.right * bulletSpeed;
+                    last_shot = Time.time;
+                    var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+                    Bullet.attack = damage;
+                    if (facingRight)
+                    {
+                        bullet.GetComponent<Rigidbody2D>().velocity = bulletSpawnPoint.right * bulletSpeed;
 
-                }
-                else
-                {
-                    bullet.GetComponent<Rigidbody2D>().velocity = bulletSpawnPoint.right * -bulletSpeed;
-                    bullet.GetComponent<Rigidbody2D>().transform.localScale = new Vector3(-(float)0.2, (float)0.2, 1); ;
-                }
-            }
-        }
-   
-        if (!has_taken_damage && !is_dashing)
-        {
-            //Dashing
-            if (Input.GetKeyDown(KeyCode.LeftShift)||Input.GetKeyDown(KeyCode.X))
-            {
-                //Debug.Log("Нажат шифт");
-                if (Time.time - dash_start - dash_length >= dashing_cooldown)
-                {
-                    rb.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
-                    dash_start = Time.time;
-                    is_dashing = true;
-                }
-            }
-            //Jumping
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.W))
-            {
-                if(is_on_wall&&has_walljump)
-                {
-                    rb.constraints = RigidbodyConstraints2D.FreezeRotation;
-                    rb.velocity = new Vector2(rb.velocity.x, jump);
-                    is_on_wall = false;
-                }
-                if (grounded)
-                {
-                    rb.velocity = new Vector2(rb.velocity.x, jump);
-                    grounded = false;
-                    last_ground = Time.time;
-                }
-                else if (Time.time - last_ground <= 0.1 && !grounded)
-                {
-                    rb.velocity = new Vector2(rb.velocity.x, jump);
-                }
-                else if (double_jump)
-                {
-                    rb.velocity = new Vector2(rb.velocity.x, jump);
-                    double_jump = false;
+                    }
+                    else
+                    {
+                        bullet.GetComponent<Rigidbody2D>().velocity = bulletSpawnPoint.right * -bulletSpeed;
+                        bullet.GetComponent<Rigidbody2D>().transform.localScale = new Vector3(-(float)0.2, (float)0.2, 1); ;
+                    }
                 }
             }
 
-            moveVelocity = 0;
+            if (!has_taken_damage && !is_dashing)
+            {
+                //Dashing
+                if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.X))
+                {
+                    //Debug.Log("Нажат шифт");
+                    if (Time.time - dash_start - dash_length >= dashing_cooldown)
+                    {
+                        rb.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
+                        dash_start = Time.time;
+                        is_dashing = true;
+                    }
+                }
+                //Jumping
+                if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.W))
+                {
+                    if (is_on_wall && has_walljump)
+                    {
+                        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+                        rb.velocity = new Vector2(rb.velocity.x, jump);
+                        is_on_wall = false;
+                    }
+                    if (grounded)
+                    {
+                        rb.velocity = new Vector2(rb.velocity.x, jump);
+                        grounded = false;
+                        last_ground = Time.time;
+                    }
+                    else if (Time.time - last_ground <= 0.1 && !grounded)
+                    {
+                        rb.velocity = new Vector2(rb.velocity.x, jump);
+                    }
+                    else if (double_jump)
+                    {
+                        rb.velocity = new Vector2(rb.velocity.x, jump);
+                        double_jump = false;
+                    }
+                }
 
-            //Left Right Movement
+                moveVelocity = 0;
+
+                //Left Right Movement
 
                 if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
                 {
@@ -222,19 +226,22 @@ public class Player : MonoBehaviour
                         Flip();
                     }
                 }
-            
-            if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)))
-            {
-                moveVelocity = 0;
+
+                if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)))
+                {
+                    moveVelocity = 0;
+                }
+
+
+                rb.velocity = new Vector2(moveVelocity, rb.velocity.y);
+
             }
-
-
-            rb.velocity = new Vector2(moveVelocity, rb.velocity.y);
-
         }
-        else
+        else//Если Игрок в меню
         {
-            //GetComponent<Rigidbody2D>().velocity = GetComponent<Rigidbody2D>().velocity;// + new Vector2(0, -(float)0.1);
+            rb.velocity = new Vector2(0, rb.velocity.y);
+            animator.SetFloat("Horizontal_Move", 0);
+            animator.SetBool("Jump", false);
         }
     }
     //касание разных объектов
@@ -250,25 +257,6 @@ public class Player : MonoBehaviour
                 GetDamage(EnemyMove.attack);
             }
         }
-        /*if (collision.gameObject.tag == "Ground")
-        {
-            if (!is_on_wall)
-            {
-                has_taken_damage = false;
-                grounded = true;
-                if (has_double_jump) double_jump = true;
-            }
-        }*/
-    }
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        /*if (collision.gameObject.tag == "Ground")
-        {
-            if (!is_on_wall)
-            {
-                grounded = true;
-            }
-        }*/
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
@@ -276,14 +264,6 @@ public class Player : MonoBehaviour
         {
             is_on_enemy = false;
         }
-        /*if (collision.gameObject.tag == "Ground")
-        {
-            if (!is_on_wall)
-            {
-                last_ground = Time.time;
-                grounded = false;
-            }
-        }*/
     }
 
     //проверка, на земле ли
@@ -359,8 +339,6 @@ public class Player : MonoBehaviour
     private void GetDamage(int damage)
     {
         health -= damage;
-        //Health healthBar = new Health();
-        //healthBar.SetHealth(health, max_health);
         if (health <= 0) Die();
         if (facingRight)
         {
@@ -374,18 +352,13 @@ public class Player : MonoBehaviour
     }
     public void GetXP(int expirience)
     {
-        this.xp += expirience;
-        if (this.xp >= xp_max)
+        PlayerLevelManager.xp += expirience;
+        while(PlayerLevelManager.xp >= PlayerLevelManager.xp_max)
+        //if (PlayerLevelManager.xp >= PlayerLevelManager.xp_max)//Новый уровень
         {
-            this.xp -= xp_max;
-            level++;
-            //Level lvl = new Level();
-            //lvl.SetLevel(level);
-            level_textbox.text = level.ToString();
-            damage++;
-            max_health += 5;
-            xp_max += 5;
-            health = max_health;
+            PlayerLevelManager.NewLevel();
+            Level.SetLevel();
+            
         }
     }
     private void Die()
@@ -394,11 +367,11 @@ public class Player : MonoBehaviour
         //gameObject.SetActive(false);
     }
 
-    public void SavePlayer()
+    /*public void SavePlayer()
     {
         SaveSysteam.SavePlayer(this);
-    }
-    public void LoadPlayer()
+    }*/
+    /*public void LoadPlayer()//это планировалось сохранение прогресса
     {
         PlayerData data = SaveSysteam.LoadPlayer();
 
@@ -425,5 +398,5 @@ public class Player : MonoBehaviour
             if (Mathf.Abs(transform.position.x - savepoints[i].transform.position.x) < 1) return true;
         }
         return false;
-    }
+    }*/
 }

@@ -18,7 +18,7 @@ public class Expirience : MonoBehaviour
     }
     void SetXp()
     {
-        gameObject.GetComponent<Image>().fillAmount = (float)Player.Instance.xp / (float)Player.Instance.xp_max;
+        gameObject.GetComponent<Image>().fillAmount = (float)PlayerLevelManager.xp / (float)PlayerLevelManager.xp_max;
     }
 
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SavePoint : MonoBehaviour
 {
-    private void OnCollisionEnter2D(Collision2D collision)
+    /*private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "SavePoint")
         {
@@ -17,5 +17,5 @@ public class SavePoint : MonoBehaviour
         {
             Player.Instance.near_save_point = false;
         }
-    }
+    }*/
 }

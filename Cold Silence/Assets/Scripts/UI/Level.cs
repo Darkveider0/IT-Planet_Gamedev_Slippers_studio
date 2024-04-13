@@ -1,25 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Level : MonoBehaviour
 {
-    public Text textbox;
-    void Start()
+    public TextMeshProUGUI levelText;
+    void Awake()
     {
-        //textbox = this.GetComponent<Text>();
+        levelText = gameObject.GetComponent<TextMeshProUGUI>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        //textbox.text = Player.Instance.level.ToString();
-        //SetLevel();
+        levelText.text = PlayerLevelManager.level.ToString();
     }
-    public void SetLevel(int level)
+    public static void SetLevel()
     {
-        
+        //levelText.text = PlayerLevelManager.level.ToString();
     }
-
 }
