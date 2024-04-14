@@ -9,10 +9,10 @@ public class Player : MonoBehaviour
 {
     private Rigidbody2D rb;
 
-    //Анимации
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     public Animator animator;
 
-    //ходьба
+    //пїЅпїЅпїЅпїЅпїЅпїЅ
     private float Horizontal_Move = 0f;
     private bool FacingRight = true;
 
@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
     public float invisibilty_frames;
     float last_damage;
     public static Player Instance { get; set; }
-    //Стрельба
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     public Transform bulletSpawnPoint;
     public GameObject bulletPrefab;
     public float bulletSpeed;
@@ -61,16 +61,24 @@ public class Player : MonoBehaviour
     BoxCollider2D groundTrigger;
     BoxCollider2D wallTrigger;
     private void Awake()
+    public TrapController trapController;
+    private ITrap trapStalagmites;
+    public bool move = false;
+    public GameObject losePanel;
+
+    void Start()
     {
         Instance = this;
         rb = GetComponent<Rigidbody2D>();
-        var colliders = GetComponents<BoxCollider2D>();//для загрузки триггеров
+        var colliders = GetComponents<BoxCollider2D>();//пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         groundTrigger = colliders[0];
         wallTrigger = colliders[1];
     }
     void Start()
     {
         health = max_health;
+        trapStalagmites = new TrapStalagmites();
+        //LoadPlayer();
     }
 
 
@@ -79,13 +87,15 @@ public class Player : MonoBehaviour
         //test_textbox.text = CheckIfAtSavePoint().ToString();
 
 
+        if (move)
+        {
 
         if (grounded && Input.GetKeyDown(KeyCode.Space))
         {
             rb.AddForce(transform.up * jump, ForceMode2D.Impulse);
         }
 
-        //по этому гайду подключались анимации https://www.youtube.com/watch?v=L5k9t7ug2r8
+        //пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ https://www.youtube.com/watch?v=L5k9t7ug2r8
         if (facingRight)
             Horizontal_Move = Input.GetAxisRaw("Horizontal") * speed;
         else
@@ -110,12 +120,12 @@ public class Player : MonoBehaviour
             Flip();
         }
 
-        /*if (Input.GetKeyDown(KeyCode.E) && CheckIfAtSavePoint())
+        if (Input.GetKeyDown(KeyCode.E) && CheckIfAtSavePoint())
         {
             SavePlayer();
-        }*/
+        }
 
-        //Если игрок всё ещё касается с врагом
+        //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         if (is_on_enemy && Time.time - last_damage >= invisibilty_frames)
         {
             has_taken_damage = true;
@@ -170,7 +180,7 @@ public class Player : MonoBehaviour
                 //Dashing
                 if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.X))
                 {
-                    //Debug.Log("Нажат шифт");
+                    //Debug.Log("пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ");
                     if (Time.time - dash_start - dash_length >= dashing_cooldown)
                     {
                         rb.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
@@ -235,14 +245,14 @@ public class Player : MonoBehaviour
 
             }
         }
-        else//Если Игрок в меню
+        else//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ
         {
             rb.velocity = new Vector2(0, rb.velocity.y);
             animator.SetFloat("Horizontal_Move", 0);
             animator.SetBool("Jump", false);
         }
     }
-    //касание разных объектов
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Enemy")
@@ -264,7 +274,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    //проверка, на земле ли
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ
     void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.CompareTag("Ground"))
@@ -283,6 +293,11 @@ public class Player : MonoBehaviour
                     rb.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
             }
             
+        }
+        if (collider.tag == "Stalagmites")
+        {
+            trapStalagmites.FallIntoTrap(trapController);
+            if (health <= 0) Die();
         }
     }
     private void OnTriggerStay2D(Collider2D collider)
@@ -321,6 +336,10 @@ public class Player : MonoBehaviour
                     rb.constraints = RigidbodyConstraints2D.FreezeRotation;
             }
         }
+        if (other.tag == "Stalagmites")
+        {
+            grounded = true;
+        }
     }
     void Flip()
     {
@@ -352,28 +371,30 @@ public class Player : MonoBehaviour
     {
         PlayerLevelManager.xp += expirience;
         while(PlayerLevelManager.xp >= PlayerLevelManager.xp_max)
-        //if (PlayerLevelManager.xp >= PlayerLevelManager.xp_max)//Новый уровень
+        //if (PlayerLevelManager.xp >= PlayerLevelManager.xp_max)//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         {
             PlayerLevelManager.NewLevel();
             Level.SetLevel();
             
         }
     }
-    private void Die()
+    public void Die()
     {
-        //Окончание игры
+        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
         //gameObject.SetActive(false);
+        losePanel.SetActive(true);
+        Lose.Instance.Defeat();
     }
 
     /*public void SavePlayer()
     {
         SaveSysteam.SavePlayer(this);
     }*/
-    /*public void LoadPlayer()//это планировалось сохранение прогресса
+    /*public void LoadPlayer()//пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     {
         PlayerData data = SaveSysteam.LoadPlayer();
 
-        //загружаемые значения
+        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         level = data.level;
         level_textbox.text = level.ToString();
         xp = data.xp;
