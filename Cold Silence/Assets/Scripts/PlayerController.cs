@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
 
     public int max_health;
     public int health;
-    
+
     public Text test_textbox;
     public int damage;
     public float invisibilty_frames;
@@ -60,13 +60,12 @@ public class Player : MonoBehaviour
 
     BoxCollider2D groundTrigger;
     BoxCollider2D wallTrigger;
-    private void Awake()
     public TrapController trapController;
     private ITrap trapStalagmites;
-    public bool move = false;
+    //public bool move = false;
     public GameObject losePanel;
 
-    void Start()
+    private void Awake()
     {
         Instance = this;
         rb = GetComponent<Rigidbody2D>();
@@ -87,173 +86,174 @@ public class Player : MonoBehaviour
         //test_textbox.text = CheckIfAtSavePoint().ToString();
 
 
-        if (move)
+        if (!isPaused)
         {
 
-        if (grounded && Input.GetKeyDown(KeyCode.Space))
-        {
-            rb.AddForce(transform.up * jump, ForceMode2D.Impulse);
-        }
-
-        //�� ����� ����� ������������ �������� https://www.youtube.com/watch?v=L5k9t7ug2r8
-        if (facingRight)
-            Horizontal_Move = Input.GetAxisRaw("Horizontal") * speed;
-        else
-            Horizontal_Move = Input.GetAxisRaw("Horizontal") * -speed;
-        animator.SetFloat("Horizontal_Move", Mathf.Abs(Horizontal_Move));
-        if (!grounded && !is_on_wall)
-        {
-            animator.SetBool("Jump", true);
-        }
-        else
-        {
-            animator.SetBool("Jump", false);
-        }
-
-        //animator.SetFloat("Horizontal_Move", Mathf.Abs(Horizontal_Move));
-        if (Horizontal_Move < 0 && FacingRight)
-        {
-            Flip();
-        }
-        else if (Horizontal_Move > 0 && !FacingRight)
-        {
-            Flip();
-        }
-
-        if (Input.GetKeyDown(KeyCode.E) && CheckIfAtSavePoint())
-        {
-            SavePlayer();
-        }
-
-        //���� ����� �� ��� �������� � ������
-        if (is_on_enemy && Time.time - last_damage >= invisibilty_frames)
-        {
-            has_taken_damage = true;
-            last_damage = Time.time;
-            GetDamage(EnemyMove.attack);
-        }
-        if (is_dashing)
-        {
-            //Debug.Log(Time.time - dash_start);
-            if (Time.time - dash_start <= dash_length)
+            if (grounded && Input.GetKeyDown(KeyCode.Space))
             {
-                if (facingRight)
-                {
-                    rb.velocity = new Vector2(speed * dash_speed_multiplier, 0);
-                }
-                else
-                {
-                    rb.velocity = new Vector2(-speed * dash_speed_multiplier, 0);
-                }
+                rb.AddForce(transform.up * jump, ForceMode2D.Impulse);
+            }
+
+            //�� ����� ����� ������������ �������� https://www.youtube.com/watch?v=L5k9t7ug2r8
+            if (facingRight)
+                Horizontal_Move = Input.GetAxisRaw("Horizontal") * speed;
+            else
+                Horizontal_Move = Input.GetAxisRaw("Horizontal") * -speed;
+            animator.SetFloat("Horizontal_Move", Mathf.Abs(Horizontal_Move));
+            if (!grounded && !is_on_wall)
+            {
+                animator.SetBool("Jump", true);
             }
             else
             {
-                is_dashing = false;
-                rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+                animator.SetBool("Jump", false);
             }
-        }
-        if (!isPaused)
-        {
-            //shooting
-            if (Input.GetMouseButtonDown(0))
+
+            //animator.SetFloat("Horizontal_Move", Mathf.Abs(Horizontal_Move));
+            if (Horizontal_Move < 0 && FacingRight)
             {
-                if (Time.time - last_shot >= shooting_cooldown)
+                Flip();
+            }
+            else if (Horizontal_Move > 0 && !FacingRight)
+            {
+                Flip();
+            }
+
+            if (Input.GetKeyDown(KeyCode.E) && CheckIfAtSavePoint())
+            {
+                SavePlayer();
+            }
+
+            //���� ����� �� ��� �������� � ������
+            if (is_on_enemy && Time.time - last_damage >= invisibilty_frames)
+            {
+                has_taken_damage = true;
+                last_damage = Time.time;
+                GetDamage(EnemyMove.attack);
+            }
+            if (is_dashing)
+            {
+                //Debug.Log(Time.time - dash_start);
+                if (Time.time - dash_start <= dash_length)
                 {
-                    last_shot = Time.time;
-                    var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
-                    Bullet.attack = damage;
                     if (facingRight)
                     {
-                        bullet.GetComponent<Rigidbody2D>().velocity = bulletSpawnPoint.right * bulletSpeed;
-
+                        rb.velocity = new Vector2(speed * dash_speed_multiplier, 0);
                     }
                     else
                     {
-                        bullet.GetComponent<Rigidbody2D>().velocity = bulletSpawnPoint.right * -bulletSpeed;
-                        bullet.GetComponent<Rigidbody2D>().transform.localScale = new Vector3(-(float)0.2, (float)0.2, 1); ;
+                        rb.velocity = new Vector2(-speed * dash_speed_multiplier, 0);
                     }
                 }
+                else
+                {
+                    is_dashing = false;
+                    rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+                }
             }
-
-            if (!has_taken_damage && !is_dashing)
+            if (!isPaused)
             {
-                //Dashing
-                if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.X))
+                //shooting
+                if (Input.GetMouseButtonDown(0))
                 {
-                    //Debug.Log("����� ����");
-                    if (Time.time - dash_start - dash_length >= dashing_cooldown)
+                    if (Time.time - last_shot >= shooting_cooldown)
                     {
-                        rb.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
-                        dash_start = Time.time;
-                        is_dashing = true;
-                    }
-                }
-                //Jumping
-                if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.W))
-                {
-                    if (is_on_wall && has_walljump)
-                    {
-                        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
-                        rb.velocity = new Vector2(rb.velocity.x, jump);
-                        is_on_wall = false;
-                    }
-                    if (grounded)
-                    {
-                        rb.velocity = new Vector2(rb.velocity.x, jump);
-                        grounded = false;
-                        last_ground = Time.time;
-                    }
-                    else if (Time.time - last_ground <= 0.1 && !grounded)
-                    {
-                        rb.velocity = new Vector2(rb.velocity.x, jump);
-                    }
-                    else if (double_jump)
-                    {
-                        rb.velocity = new Vector2(rb.velocity.x, jump);
-                        double_jump = false;
+                        last_shot = Time.time;
+                        var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+                        Bullet.attack = damage;
+                        if (facingRight)
+                        {
+                            bullet.GetComponent<Rigidbody2D>().velocity = bulletSpawnPoint.right * bulletSpeed;
+
+                        }
+                        else
+                        {
+                            bullet.GetComponent<Rigidbody2D>().velocity = bulletSpawnPoint.right * -bulletSpeed;
+                            bullet.GetComponent<Rigidbody2D>().transform.localScale = new Vector3(-(float)0.2, (float)0.2, 1); ;
+                        }
                     }
                 }
 
-                moveVelocity = 0;
-
-                //Left Right Movement
-
-                if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+                if (!has_taken_damage && !is_dashing)
                 {
-                    moveVelocity = -speed;
-                    if (facingRight)
+                    //Dashing
+                    if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.X))
                     {
-                        Flip();
+                        //Debug.Log("����� ����");
+                        if (Time.time - dash_start - dash_length >= dashing_cooldown)
+                        {
+                            rb.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
+                            dash_start = Time.time;
+                            is_dashing = true;
+                        }
                     }
-                }
-                if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
-                {
-                    moveVelocity = speed;
-                    if (!facingRight)
+                    //Jumping
+                    if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.W))
                     {
-                        Flip();
+                        if (is_on_wall && has_walljump)
+                        {
+                            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+                            rb.velocity = new Vector2(rb.velocity.x, jump);
+                            is_on_wall = false;
+                        }
+                        if (grounded)
+                        {
+                            rb.velocity = new Vector2(rb.velocity.x, jump);
+                            grounded = false;
+                            last_ground = Time.time;
+                        }
+                        else if (Time.time - last_ground <= 0.1 && !grounded)
+                        {
+                            rb.velocity = new Vector2(rb.velocity.x, jump);
+                        }
+                        else if (double_jump)
+                        {
+                            rb.velocity = new Vector2(rb.velocity.x, jump);
+                            double_jump = false;
+                        }
                     }
-                }
 
-                if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)))
-                {
                     moveVelocity = 0;
+
+                    //Left Right Movement
+
+                    if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+                    {
+                        moveVelocity = -speed;
+                        if (facingRight)
+                        {
+                            Flip();
+                        }
+                    }
+                    if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+                    {
+                        moveVelocity = speed;
+                        if (!facingRight)
+                        {
+                            Flip();
+                        }
+                    }
+
+                    if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)))
+                    {
+                        moveVelocity = 0;
+                    }
+
+
+                    rb.velocity = new Vector2(moveVelocity, rb.velocity.y);
+
                 }
-
-
-                rb.velocity = new Vector2(moveVelocity, rb.velocity.y);
-
             }
-        }
-        else//���� ����� � ����
-        {
-            rb.velocity = new Vector2(0, rb.velocity.y);
-            animator.SetFloat("Horizontal_Move", 0);
-            animator.SetBool("Jump", false);
+            else//���� ����� � ����
+            {
+                rb.velocity = new Vector2(0, rb.velocity.y);
+                animator.SetFloat("Horizontal_Move", 0);
+                animator.SetBool("Jump", false);
+            }
         }
     }
     //������� ������ ��������
-    private void OnCollisionEnter2D(Collision2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Enemy")
         {
@@ -266,7 +266,7 @@ public class Player : MonoBehaviour
             }
         }
     }
-    private void OnCollisionExit2D(Collision2D collision)
+    void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Enemy")
         {
@@ -286,13 +286,13 @@ public class Player : MonoBehaviour
                 if (has_double_jump) double_jump = true;
             }
 
-            if(collider.IsTouching(wallTrigger))
+            if (collider.IsTouching(wallTrigger))
             {
                 is_on_wall = true;
                 if (has_walljump)
                     rb.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
             }
-            
+
         }
         if (collider.tag == "Stalagmites")
         {
@@ -300,7 +300,7 @@ public class Player : MonoBehaviour
             if (health <= 0) Die();
         }
     }
-    private void OnTriggerStay2D(Collider2D collider)
+    void OnTriggerStay2D(Collider2D collider)
     {
         if (collider.CompareTag("Ground"))
         {
@@ -321,7 +321,7 @@ public class Player : MonoBehaviour
     }
     void OnTriggerExit2D(Collider2D collider)
     {
-        
+
         if (collider.CompareTag("Ground"))
         {
             if (!collider.IsTouching(groundTrigger))
@@ -336,7 +336,7 @@ public class Player : MonoBehaviour
                     rb.constraints = RigidbodyConstraints2D.FreezeRotation;
             }
         }
-        if (other.tag == "Stalagmites")
+        if (collider.tag == "Stalagmites")
         {
             grounded = true;
         }
@@ -353,7 +353,7 @@ public class Player : MonoBehaviour
         }
         facingRight = !facingRight;
     }
-    private void GetDamage(int damage)
+    public void GetDamage(int damage)
     {
         health -= damage;
         if (health <= 0) Die();
@@ -370,12 +370,12 @@ public class Player : MonoBehaviour
     public void GetXP(int expirience)
     {
         PlayerLevelManager.xp += expirience;
-        while(PlayerLevelManager.xp >= PlayerLevelManager.xp_max)
+        while (PlayerLevelManager.xp >= PlayerLevelManager.xp_max)
         //if (PlayerLevelManager.xp >= PlayerLevelManager.xp_max)//����� �������
         {
             PlayerLevelManager.NewLevel();
             Level.SetLevel();
-            
+
         }
     }
     public void Die()
@@ -386,10 +386,10 @@ public class Player : MonoBehaviour
         Lose.Instance.Defeat();
     }
 
-    /*public void SavePlayer()
+    public void SavePlayer()
     {
         SaveSysteam.SavePlayer(this);
-    }*/
+    }
     /*public void LoadPlayer()//��� ������������� ���������� ���������
     {
         PlayerData data = SaveSysteam.LoadPlayer();
@@ -404,7 +404,7 @@ public class Player : MonoBehaviour
         position.y = data.position[1];
         position.z = data.position[2];
         transform.position = position;
-    }
+    }*/
     public void newPlayer()
     {
         SaveSysteam.newPlayer(this);
@@ -417,5 +417,6 @@ public class Player : MonoBehaviour
             if (Mathf.Abs(transform.position.x - savepoints[i].transform.position.x) < 1) return true;
         }
         return false;
-    }*/
+    }
+
 }

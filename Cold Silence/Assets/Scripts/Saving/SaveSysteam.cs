@@ -6,7 +6,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public class SaveSysteam : MonoBehaviour
 {
-    /*public static void SavePlayer(Player player)
+    public static void SavePlayer(Player player)
     {
         BinaryFormatter formatter = new BinaryFormatter();
         //string path = Application.persistentDataPath + "/player.itnoob";
@@ -47,5 +47,5 @@ public class SaveSysteam : MonoBehaviour
 
         formatter.Serialize(stream, data);
         stream.Close();
-    }*/
+    }
 }

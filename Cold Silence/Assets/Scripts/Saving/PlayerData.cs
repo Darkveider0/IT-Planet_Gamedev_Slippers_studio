@@ -8,6 +8,19 @@ public class PlayerData:MonoBehaviour
     public static int max_health;
     public static int damage;
     private bool manager_exists;
+    public int level, xp;
+    public float[] position;
+
+    public PlayerData(Player player)
+    {
+        level = PlayerLevelManager.level;
+        xp = PlayerLevelManager.xp;
+
+        position = new float[3];
+        position[0] = player.transform.position.x;
+        position[1] = player.transform.position.y;
+        position[2] = player.transform.position.z;
+    }
     void Start()
     {
         if (manager_exists)

@@ -13,6 +13,6 @@ public class Cutscene : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
         this.gameObject.SetActive(false);
-        Player.Instance.move = true;
+        Player.Instance.isPaused = false;
     }
 }

@@ -60,16 +60,16 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.13f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Library\PackageCache\com.unity.localization@1.4.5\Editor\InternalBridge\DrivenPropertyManagerInternalBridge.cs" />
     <Compile Include="Library\PackageCache\com.unity.localization@1.4.5\Editor\InternalBridge\UnityConnectBridge.cs" />
     <Compile Include="Library\PackageCache\com.unity.localization@1.4.5\Editor\InternalBridge\ScriptAttributeUtilityBridge.cs" />
     <Compile Include="Library\PackageCache\com.unity.localization@1.4.5\Editor\InternalBridge\EditorApplicationBridge.cs" />
-    <Compile Include="Library\PackageCache\com.unity.localization@1.4.5\Editor\InternalBridge\SearchBridge.cs" />
     <Compile Include="Library\PackageCache\com.unity.localization@1.4.5\Editor\InternalBridge\EditorGUIUtilityBridge.cs" />
-    <Compile Include="Library\PackageCache\com.unity.localization@1.4.5\Editor\InternalBridge\AssetPreviewBridge.cs" />
     <Compile Include="Library\PackageCache\com.unity.localization@1.4.5\Editor\InternalBridge\AssemblyInfo.cs" />
     <Compile Include="Library\PackageCache\com.unity.localization@1.4.5\Editor\InternalBridge\PrefColorBridge.cs" />
     <Compile Include="Library\PackageCache\com.unity.localization@1.4.5\Editor\InternalBridge\EditorGUIBridge.cs" />
+    <Compile Include="Library\PackageCache\com.unity.localization@1.4.5\Editor\InternalBridge\DrivenPropertyManagerInternalBridge.cs" />
+    <Compile Include="Library\PackageCache\com.unity.localization@1.4.5\Editor\InternalBridge\SearchBridge.cs" />
+    <Compile Include="Library\PackageCache\com.unity.localization@1.4.5\Editor\InternalBridge\AssetPreviewBridge.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Library\PackageCache\com.unity.localization@1.4.5\Editor\InternalBridge\Unity.Localization.Editor.InternalBridge.asmdef" />

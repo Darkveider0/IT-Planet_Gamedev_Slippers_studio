@@ -19,7 +19,7 @@ public class Transition : MonoBehaviour
             //StartCoroutine(SceneTransitions.fadeIn(scene_number));
             //SceneManager.LoadScene(scene_number);
             message.SetActive(true);
-            Player.Instance.move = false;
+            Player.Instance.isPaused = true;
             StartCoroutine(Wait());
         }
     }
@@ -27,7 +27,7 @@ public class Transition : MonoBehaviour
     public IEnumerator Wait()
     {
         yield return new WaitForSeconds(3f);
-        Player.Instance.move = true;
+        Player.Instance.isPaused = false;
         StartCoroutine(SceneTransitions.fadeIn(scene_number));
     }
 }

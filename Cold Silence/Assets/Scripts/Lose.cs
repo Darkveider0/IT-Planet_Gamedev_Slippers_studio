@@ -15,14 +15,14 @@ public class Lose : MonoBehaviour
 
     public void Defeat()
     {
-        Player.Instance.move = false;
+        Player.Instance.isPaused = true;
         StartCoroutine(Wait());
     }
 
     public IEnumerator Wait()
     {
         yield return new WaitForSeconds(2f);
-        Player.Instance.move = true;
+        Player.Instance.isPaused = false;
         SceneManager.LoadScene(scene_name);
     }
 }
