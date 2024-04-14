@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
+    //Это скрипт для меню
     public void New_Game(string sceneName)
     {
         //новая игра

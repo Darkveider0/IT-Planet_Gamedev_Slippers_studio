@@ -6,25 +6,14 @@ using UnityEngine.UIElements;
 
 public class Transition : MonoBehaviour
 {
-    public string scene_name;
-    
-        
-    void Start()
-    {
-        
-    }
-
-    
-    void Update()
-    {
-        
-    }
-    
+    public int scene_number;    
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
-            SceneManager.LoadScene(scene_name);
+            PlayerData.SavePlayerData();
+            StartCoroutine(SceneTransitions.fadeIn(scene_number));
+            //SceneManager.LoadScene(scene_number);
         }
     }
 }

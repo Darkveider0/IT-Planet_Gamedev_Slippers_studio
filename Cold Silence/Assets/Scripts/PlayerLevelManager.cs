@@ -14,6 +14,7 @@ public class PlayerLevelManager : MonoBehaviour
         if(manager_exists)
         {
             Destroy(gameObject);
+            return;
         }
         DontDestroyOnLoad(gameObject);
         manager_exists = true;

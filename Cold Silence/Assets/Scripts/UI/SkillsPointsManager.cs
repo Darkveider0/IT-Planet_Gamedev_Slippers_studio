@@ -13,7 +13,7 @@ public class SkillsPointsManager : MonoBehaviour
     public void OpenWindow()
     {
         this.gameObject.SetActive(true);
-        Player.Instance.is_in_menu = true;
+        Player.Instance.isPaused = true;
         if (PlayerLevelManager.skill_points > 0)
         {
             damageUpgradeButton.SetActive(true);
@@ -59,6 +59,6 @@ public class SkillsPointsManager : MonoBehaviour
     public void CloseWindow()
     {
         this.gameObject.SetActive(false);
-        Player.Instance.is_in_menu = false;
+        Player.Instance.isPaused = false;
     }
 }

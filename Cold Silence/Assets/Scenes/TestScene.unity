@@ -507,7 +507,7 @@ Transform:
   m_GameObject: {fileID: 187878470}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 41.92, y: -2.7, z: 0}
+  m_LocalPosition: {x: -10, y: -2.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -880,7 +880,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ba8e0ebece0b8b42b737483f8b43721, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scene_name: Menu
+  scene_number: 2
 --- !u!212 &505535578
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1190,6 +1190,10 @@ PrefabInstance:
     - target: {fileID: 298067747762088127, guid: 9c4fe67af5459644ab9abfd3f9f1cba5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 878218150521022696, guid: 9c4fe67af5459644ab9abfd3f9f1cba5, type: 3}
+      propertyPath: m_Mass
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 5717306627378983406, guid: 9c4fe67af5459644ab9abfd3f9f1cba5, type: 3}
       propertyPath: playerTransform
@@ -1551,29 +1555,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waypoints: []
   attack: 3
---- !u!1 &1482778557 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2017333530419796153, guid: 4e1c379dbbc953344b879a14ecce24ab, type: 3}
-  m_PrefabInstance: {fileID: 1003453097713090517}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1482778564
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1482778557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f10a2933b23e5d047b1c1ae36738d1cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillMenuButton: {fileID: 1606397392}
---- !u!1 &1606397392 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8360962318121827946, guid: 4e1c379dbbc953344b879a14ecce24ab, type: 3}
-  m_PrefabInstance: {fileID: 1003453097713090517}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1768821696 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5021647661775717529, guid: 429547bef952e734b8d4746b1b6e5478, type: 3}
@@ -1756,22 +1737,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 572806955}
-    - target: {fileID: 8360962318121827946, guid: 4e1c379dbbc953344b879a14ecce24ab, type: 3}
-      propertyPath: m_Name
-      value: Button Skill Point Menu
-      objectReference: {fileID: 0}
-    - target: {fileID: 8360962318121827946, guid: 4e1c379dbbc953344b879a14ecce24ab, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 8987301703763316200, guid: 4e1c379dbbc953344b879a14ecce24ab, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2017333530419796153, guid: 4e1c379dbbc953344b879a14ecce24ab, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1482778564}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e1c379dbbc953344b879a14ecce24ab, type: 3}
 --- !u!1001 &2085081634556650453
 PrefabInstance:
@@ -1795,7 +1764,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5021647661775717529, guid: 429547bef952e734b8d4746b1b6e5478, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.18
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 5021647661775717529, guid: 429547bef952e734b8d4746b1b6e5478, type: 3}
       propertyPath: m_LocalPosition.y

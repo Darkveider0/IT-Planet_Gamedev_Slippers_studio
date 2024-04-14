@@ -52,7 +52,7 @@ public class Player : MonoBehaviour
     bool has_taken_damage = false;
     bool is_on_enemy = false;
     bool is_on_wall = false;
-    public bool is_in_menu = false;
+    public bool isPaused = false;
     bool is_dashing = false;
     //public bool near_save_point = false;
     //For testing
@@ -60,18 +60,17 @@ public class Player : MonoBehaviour
 
     BoxCollider2D groundTrigger;
     BoxCollider2D wallTrigger;
-    void Start()
+    private void Awake()
     {
         Instance = this;
         rb = GetComponent<Rigidbody2D>();
-        //xp_max = 15 + level * 5;
-        //max_health = 20 + level * 5;
-        //damage = 1 + level;
-        health = max_health;
-        //LoadPlayer();
         var colliders = GetComponents<BoxCollider2D>();//для загрузки триггеров
         groundTrigger = colliders[0];
         wallTrigger = colliders[1];
+    }
+    void Start()
+    {
+        health = max_health;
     }
 
 
@@ -79,7 +78,6 @@ public class Player : MonoBehaviour
     {
         //test_textbox.text = CheckIfAtSavePoint().ToString();
 
-        //Анимации
 
 
         if (grounded && Input.GetKeyDown(KeyCode.Space))
@@ -144,7 +142,7 @@ public class Player : MonoBehaviour
                 rb.constraints = RigidbodyConstraints2D.FreezeRotation;
             }
         }
-        if (!is_in_menu)
+        if (!isPaused)
         {
             //shooting
             if (Input.GetMouseButtonDown(0))

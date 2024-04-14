@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\UI\Health.cs" />
     <Compile Include="Assets\Scripts\UI\Expirience.cs" />
+    <Compile Include="Assets\Scripts\SceneTransitions.cs" />
     <Compile Include="Assets\Scripts\Enemy.cs" />
     <Compile Include="Assets\Scripts\GunShooting.cs" />
     <Compile Include="Assets\Scripts\Saving\SaveSysteam.cs" />
