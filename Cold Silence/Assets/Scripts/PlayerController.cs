@@ -4,7 +4,6 @@ using UnityEngine.UI;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.ComponentModel.Design;
 using UnityEngine.SceneManagement;
-using TMPro;
 
 public class Player : MonoBehaviour
 {
@@ -66,8 +65,6 @@ public class Player : MonoBehaviour
     //public bool move = false;
     public GameObject losePanel;
 
-    private GameObject canvas;
-
     private void Awake()
     {
         Instance = this;
@@ -75,32 +72,6 @@ public class Player : MonoBehaviour
         var colliders = GetComponents<BoxCollider2D>();//��� �������� ���������
         groundTrigger = colliders[0];
         wallTrigger = colliders[1];
-        TextMeshPro textMeshPro = GameObject.Find("SucessMessage").GetComponent<TextMeshPro>();
-        if (textMeshPro != null)
-        {
-            textMeshPro.alpha = 0; // Установить начальное состояние текста
-        }
-
-        // Проверка состояния переменных и управление видимостью кнопок
-        GameObject button1 = GameObject.Find("button1");
-        GameObject button2 = GameObject.Find("button2");
-        GameObject button3 = GameObject.Find("button3");
-        Button button4 = button1.GetComponent<Button>();
-        Button button5 = button2.GetComponent<Button>();
-        Button button6 = button3.GetComponent<Button>();
-
-        if (has_walljump)
-        {
-            SetButtonVisibility(button4, false);
-        }
-        if (has_double_jump)
-        {
-            SetButtonVisibility(button5, false);
-        }
-        if (has_dash)
-        {
-            SetButtonVisibility(button6, false);
-        }
     }
     void Start()
     {
@@ -113,6 +84,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         //test_textbox.text = CheckIfAtSavePoint().ToString();
+
 
         if (!isPaused)
         {
@@ -445,92 +417,6 @@ public class Player : MonoBehaviour
             if (Mathf.Abs(transform.position.x - savepoints[i].transform.position.x) < 1) return true;
         }
         return false;
-    }
-
-    void OnMouseDown()
-    {
-        // Ваш код для обработки клика
-        Debug.Log("Sprite Clicked");
-    }
-
-    public void ChangeBool(int buttonId)
-    {
-        switch (buttonId)
-        {
-            case 1:
-                has_double_jump = true;
-                Debug.Log("1");
-                break;
-            case 2:
-                has_walljump = true;
-                Debug.Log("2");
-                break;
-            case 3:
-                has_dash = true;
-                Debug.Log("3");
-                break;
-            default:
-                Debug.LogError("Неизвестный идентификатор кнопки");
-                break;
-        }
-        // Поиск канва по имени и скрытие
-        canvas = GameObject.Find("Canvas Of Ability");
-
-        if (canvas != null)
-        {
-            // Использование CanvasGroup для более гибкого управления видимостью
-            CanvasGroup canvasGroup = canvas.GetComponent<CanvasGroup>();
-            if (canvasGroup != null)
-            {
-                canvasGroup.alpha = 0; // Сделать канва полностью прозрачной
-                canvasGroup.interactable = false; // Отключить взаимодействие с канва
-                canvasGroup.blocksRaycasts = false; // Отключить блокировку лучей
-            }
-            else
-            {
-                // Если CanvasGroup не найден, просто отключаем канва
-                canvas.SetActive(false);
-            }
-        }
-        else
-        {
-            Debug.LogError("Канва 'Canvas Of Ability' не найдена");
-        }
-
-        // Поиск текстового объекта и сделать его видимым
-        GameObject textObject = GameObject.Find("SucessMessage");
-        if (textObject != null)
-        {
-            // Предполагается, что у текстового объекта есть компонент TextMeshPro
-            TextMeshPro textMeshPro = textObject.GetComponent<TextMeshPro>();
-            if (textMeshPro != null)
-            {
-                // Изменение видимости текста
-                textMeshPro.alpha = 1; // Сделать текст полностью видимым
-
-                // Запуск корутины для скрытия текста через 3 секунды
-                StartCoroutine(HideTextAfterDelay(textMeshPro, 3f));
-            }
-            else
-            {
-                Debug.LogError("Текстовый объект 'SucessMessage' не найден или не имеет компонента TextMeshPro");
-            }
-        }
-        else
-        {
-            Debug.LogError("Объект 'SucessMessage' не найден");
-        }
-
-        
-    }
-    IEnumerator HideTextAfterDelay(TextMeshPro textMeshPro, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        textMeshPro.alpha = 0; // Сделать текст полностью невидимым
-    }
-    private void SetButtonVisibility(Button button, bool isVisible)
-    {
-        button.gameObject.SetActive(isVisible);
     }
 
 }

@@ -104,7 +104,6 @@ GameObject:
   - component: {fileID: 1603139267075702084}
   - component: {fileID: 4902384414461925615}
   - component: {fileID: 1733336842428528020}
-  - component: {fileID: 8820342339050405130}
   - component: {fileID: 3296492217920701398}
   - component: {fileID: 839696599957869430}
   - component: {fileID: 76307682716382442}
@@ -276,19 +275,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.02, y: 3.6}
   m_EdgeRadius: 0
---- !u!114 &8820342339050405130
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3314096931288595965}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4de94a0c50abdc040926e27bf143dd8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scene_name: Menu
 --- !u!61 &3296492217920701398
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -376,6 +362,9 @@ MonoBehaviour:
   animator: {fileID: 4729403693988728160}
   max_health: 20
   health: 20
+  xp: 0
+  xp_max: 0
+  level: 1
   test_textbox: {fileID: 0}
   damage: 2
   invisibilty_frames: 1
@@ -387,15 +376,15 @@ MonoBehaviour:
   dash_length: 0.3
   dash_speed_multiplier: 2
   speed: 9
-  jump: 14
-  has_double_jump: 1
+  jump: 12
+  has_double_jump: 0
   has_walljump: 0
   has_dash: 0
   grounded: 1
-  isPaused: 0
+  is_on_enemy: 0
+  is_on_wall: 0
+  near_save_point: 0
   level_textbox: {fileID: 0}
-  trapController: {fileID: 0}
-  losePanel: {fileID: 0}
 --- !u!114 &6014760317809040798
 MonoBehaviour:
   m_ObjectHideFlags: 0

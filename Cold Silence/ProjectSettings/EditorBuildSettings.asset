@@ -12,14 +12,26 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: e546f889b55cd08479586d8e761b20e0
   - enabled: 1
+    path: Assets/Scenes/Second_LVL.unity
+    guid: 172c3f02d7c085b49a946d0835c89d0d
+  - enabled: 1
     path: Assets/Scenes/TestScene.unity
     guid: 11d7f985715b37f48b90bc647e44b1c4
   - enabled: 1
     path: Assets/Scenes/Tutorial_Room_Fall.unity
     guid: f01b0624cea86dd4595b24c33e296754
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Third_Lvl.unity
     guid: d68896cabf84c0749b8c76499a4d284d
+  - enabled: 1
+    path: Assets/Scenes/Fourth_Lvl.unity
+    guid: abfe08377d0e8eb4290e312356228b62
+  - enabled: 1
+    path: Assets/Scenes/FIfth_LVL.unity
+    guid: 835af1e748a9d164aaa36a8d5a8934a3
+  - enabled: 1
+    path: Assets/Scenes/Relax_Room.unity
+    guid: 81822be23b80d8f46888be8c2b10790f
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 04c6b33cf6bf5214084a6b8cd50a14f2, type: 2}
     com.unity.localization.settings: {fileID: 11400000, guid: f0ca70a400f9ed74caf3e6a4708f751e, type: 2}
