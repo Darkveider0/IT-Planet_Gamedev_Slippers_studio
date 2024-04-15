@@ -27077,6 +27077,10 @@ PrefabInstance:
       value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 76307682716382442, guid: 429547bef952e734b8d4746b1b6e5478, type: 3}
+      propertyPath: losePanel
+      value: 
+      objectReference: {fileID: 8729611519618985208, guid: 38fda546b76eeaa49834beb7b0725928, type: 3}
+    - target: {fileID: 76307682716382442, guid: 429547bef952e734b8d4746b1b6e5478, type: 3}
       propertyPath: test_textbox
       value: 
       objectReference: {fileID: 2026416561}
@@ -27090,7 +27094,7 @@ PrefabInstance:
       objectReference: {fileID: 1457173210}
     - target: {fileID: 76307682716382442, guid: 429547bef952e734b8d4746b1b6e5478, type: 3}
       propertyPath: has_double_jump
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3314096931288595965, guid: 429547bef952e734b8d4746b1b6e5478, type: 3}
       propertyPath: m_Name

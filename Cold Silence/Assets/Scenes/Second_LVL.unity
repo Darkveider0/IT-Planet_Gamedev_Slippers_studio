@@ -27735,7 +27735,7 @@ PrefabInstance:
       objectReference: {fileID: 1457173210}
     - target: {fileID: 76307682716382442, guid: 429547bef952e734b8d4746b1b6e5478, type: 3}
       propertyPath: has_double_jump
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3314096931288595965, guid: 429547bef952e734b8d4746b1b6e5478, type: 3}
       propertyPath: m_Name

@@ -7,15 +7,15 @@
       "RelativeMoniker": "D:0:0:{D9BDB201-B442-6988-977F-C20DA1CA3EB4}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D9BDB201-B442-6988-977F-C20DA1CA3EB4}|Assembly-CSharp.csproj|d:\\prohramming\\itplanet\\it-planet_gamedev_slippers_studio\\cold silence\\assets\\scripts\\spikes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D9BDB201-B442-6988-977F-C20DA1CA3EB4}|Assembly-CSharp.csproj|D:\\prohramming\\ITPlanet\\IT-Planet_Gamedev_Slippers_studio\\Cold Silence\\assets\\scripts\\spikes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D9BDB201-B442-6988-977F-C20DA1CA3EB4}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\spikes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D9BDB201-B442-6988-977F-C20DA1CA3EB4}|Assembly-CSharp.csproj|d:\\prohramming\\itplanet\\it-planet_gamedev_slippers_studio\\cold silence\\assets\\scripts\\lose.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D9BDB201-B442-6988-977F-C20DA1CA3EB4}|Assembly-CSharp.csproj|D:\\prohramming\\ITPlanet\\IT-Planet_Gamedev_Slippers_studio\\Cold Silence\\assets\\scripts\\lose.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D9BDB201-B442-6988-977F-C20DA1CA3EB4}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\lose.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D9BDB201-B442-6988-977F-C20DA1CA3EB4}|Assembly-CSharp.csproj|d:\\prohramming\\itplanet\\it-planet_gamedev_slippers_studio\\cold silence\\assets\\scripts\\transition.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D9BDB201-B442-6988-977F-C20DA1CA3EB4}|Assembly-CSharp.csproj|D:\\prohramming\\ITPlanet\\IT-Planet_Gamedev_Slippers_studio\\Cold Silence\\assets\\scripts\\transition.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D9BDB201-B442-6988-977F-C20DA1CA3EB4}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\transition.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -45,8 +45,7 @@
               "RelativeToolTip": "Assets\\Scripts\\Transition.cs",
               "ViewState": "AQIAAA0AAAAAAAAAAAAzwAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-15T14:58:49.307Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-15T14:58:49.307Z"
             },
             {
               "$type": "Document",
@@ -58,8 +57,7 @@
               "RelativeToolTip": "Assets\\Scripts\\Spikes.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-15T14:58:46.334Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-15T14:58:46.334Z"
             },
             {
               "$type": "Document",
@@ -69,7 +67,7 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerController.cs",
               "ToolTip": "D:\\prohramming\\ITPlanet\\IT-Planet_Gamedev_Slippers_studio\\Cold Silence\\Assets\\Scripts\\PlayerController.cs",
               "RelativeToolTip": "Assets\\Scripts\\PlayerController.cs",
-              "ViewState": "AQIAAJgBAAAAAAAAAAAuwKgBAAAFAAAA",
+              "ViewState": "AQIAAE4AAAAAAAAAAAAYwBQCAAAvAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-15T14:56:28.933Z",
               "EditorCaption": ""
@@ -84,8 +82,7 @@
               "RelativeToolTip": "Assets\\Scripts\\Lose.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-15T13:03:51.537Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-15T13:03:51.537Z"
             },
             {
               "$type": "Document",
@@ -97,8 +94,7 @@
               "RelativeToolTip": "..\\..\\..\\..\\unity\\projects\\Hit-and-Run\\Hit and Run\\Assets\\Scripts\\EndOfLevel.cs",
               "ViewState": "AQIAAAwAAAAAAAAAAAAAACUAAAAWAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-15T12:11:23.302Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-15T12:11:23.302Z"
             }
           ]
         },
