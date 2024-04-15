@@ -3,7 +3,7 @@ guid: 7cc4f0cc084d8444dba32b1995eec841
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 12
+  serializedVersion: 13
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -91,6 +91,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     ignorePlatformSupport: 0
+<<<<<<< Updated upstream:Cold Silence/Assets/Objects/choose.png.meta
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -130,6 +131,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     ignorePlatformSupport: 0
+=======
+>>>>>>> Stashed changes:Cold Silence/Assets/Objects/3.png.meta
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
@@ -145,7 +148,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      3_0: -6470460504253458178
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
