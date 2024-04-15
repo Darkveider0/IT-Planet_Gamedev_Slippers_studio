@@ -3,6 +3,22 @@
   "WorkspaceRootPath": "D:\\prohramming\\ITPlanet\\IT-Planet_Gamedev_Slippers_studio\\Cold Silence\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{D9BDB201-B442-6988-977F-C20DA1CA3EB4}|Assembly-CSharp.csproj|d:\\prohramming\\itplanet\\it-planet_gamedev_slippers_studio\\cold silence\\assets\\scripts\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D9BDB201-B442-6988-977F-C20DA1CA3EB4}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D9BDB201-B442-6988-977F-C20DA1CA3EB4}|Assembly-CSharp.csproj|d:\\prohramming\\itplanet\\it-planet_gamedev_slippers_studio\\cold silence\\assets\\scripts\\spikes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D9BDB201-B442-6988-977F-C20DA1CA3EB4}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\spikes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D9BDB201-B442-6988-977F-C20DA1CA3EB4}|Assembly-CSharp.csproj|d:\\prohramming\\itplanet\\it-planet_gamedev_slippers_studio\\cold silence\\assets\\scripts\\lose.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D9BDB201-B442-6988-977F-C20DA1CA3EB4}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\lose.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D9BDB201-B442-6988-977F-C20DA1CA3EB4}|Assembly-CSharp.csproj|d:\\prohramming\\itplanet\\it-planet_gamedev_slippers_studio\\cold silence\\assets\\scripts\\transition.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D9BDB201-B442-6988-977F-C20DA1CA3EB4}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\transition.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\unity\\projects\\Hit-and-Run\\Hit and Run\\Assets\\Scripts\\EndOfLevel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -13,7 +29,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -21,7 +37,59 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Transition.cs",
+              "DocumentMoniker": "D:\\prohramming\\ITPlanet\\IT-Planet_Gamedev_Slippers_studio\\Cold Silence\\Assets\\Scripts\\Transition.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Transition.cs",
+              "ToolTip": "D:\\prohramming\\ITPlanet\\IT-Planet_Gamedev_Slippers_studio\\Cold Silence\\Assets\\Scripts\\Transition.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Transition.cs",
+              "ViewState": "AQIAAA0AAAAAAAAAAAAzwAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-15T14:58:49.307Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Spikes.cs",
+              "DocumentMoniker": "D:\\prohramming\\ITPlanet\\IT-Planet_Gamedev_Slippers_studio\\Cold Silence\\Assets\\Scripts\\Spikes.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Spikes.cs",
+              "ToolTip": "D:\\prohramming\\ITPlanet\\IT-Planet_Gamedev_Slippers_studio\\Cold Silence\\Assets\\Scripts\\Spikes.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Spikes.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-15T14:58:46.334Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "PlayerController.cs",
+              "DocumentMoniker": "D:\\prohramming\\ITPlanet\\IT-Planet_Gamedev_Slippers_studio\\Cold Silence\\Assets\\Scripts\\PlayerController.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerController.cs",
+              "ToolTip": "D:\\prohramming\\ITPlanet\\IT-Planet_Gamedev_Slippers_studio\\Cold Silence\\Assets\\Scripts\\PlayerController.cs",
+              "RelativeToolTip": "Assets\\Scripts\\PlayerController.cs",
+              "ViewState": "AQIAAJgBAAAAAAAAAAAuwKgBAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-15T14:56:28.933Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Lose.cs",
+              "DocumentMoniker": "D:\\prohramming\\ITPlanet\\IT-Planet_Gamedev_Slippers_studio\\Cold Silence\\Assets\\Scripts\\Lose.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Lose.cs",
+              "ToolTip": "D:\\prohramming\\ITPlanet\\IT-Planet_Gamedev_Slippers_studio\\Cold Silence\\Assets\\Scripts\\Lose.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Lose.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-15T13:03:51.537Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "EndOfLevel.cs",
               "DocumentMoniker": "D:\\unity\\projects\\Hit-and-Run\\Hit and Run\\Assets\\Scripts\\EndOfLevel.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\unity\\projects\\Hit-and-Run\\Hit and Run\\Assets\\Scripts\\EndOfLevel.cs",

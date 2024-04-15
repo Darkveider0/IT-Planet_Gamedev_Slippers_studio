@@ -85,7 +85,6 @@ public class Player : MonoBehaviour
     {
         //test_textbox.text = CheckIfAtSavePoint().ToString();
 
-
         if (!isPaused)
         {
 
@@ -417,6 +416,34 @@ public class Player : MonoBehaviour
             if (Mathf.Abs(transform.position.x - savepoints[i].transform.position.x) < 1) return true;
         }
         return false;
+    }
+
+    void OnMouseDown()
+    {
+        // Ваш код для обработки клика
+        Debug.Log("Sprite Clicked");
+    }
+
+    public void ChangeBool(int buttonId)
+    {
+        switch (buttonId)
+        {
+            case 1:
+                has_double_jump = true;
+                Debug.Log("1");
+                break;
+            case 2:
+                has_walljump = true;
+                Debug.Log("2");
+                break;
+            case 3:
+                has_dash = true;
+                Debug.Log("3");
+                break;
+            default:
+                Debug.LogError("Неизвестный идентификатор кнопки");
+                break;
+        }
     }
 
 }
